@@ -1,7 +1,8 @@
 # toko-posh-dev-tools
-Easier management of user settings for powershell modules between versions.
+Tools for PowerShell development.
 
-Allows easier management of user settings between different releases of powershell modules.
+get-userConfig
+Easier management of user settings between different releases of powershell modules.
 The tool reads initial settings from default config file that is deployed with the new version of a module.
 It then syncs this file with a user config file created from previous version and applies following changes:
 - Newly added settings to default config are transfered with their default values to user config file.

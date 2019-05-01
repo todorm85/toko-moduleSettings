@@ -1,6 +1,6 @@
-Import-Module "C:\Users\User\Desktop\toko-moduleSettings\toko-moduleSettings\toko-moduleSettings.psm1" -Force
+Import-Module "C:\Users\User\Desktop\toko-posh-dev-tools\toko-posh-dev-tools\toko-posh-dev-tools.psm1" -Force
 
-InModuleScope toko-moduleSettings {
+InModuleScope toko-posh-dev-tools {
     
     Describe "init-config should" {
 
