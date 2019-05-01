@@ -1,4 +1,4 @@
-# toko-moduleSettings
+# toko-posh-dev-tools
 Easier management of user settings for powershell modules between versions.
 
 Allows easier management of user settings between different releases of powershell modules.
