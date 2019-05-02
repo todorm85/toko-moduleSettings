@@ -11,6 +11,7 @@ function get-userConfig {
     $defaultConfig = Get-Content $defaultConfigPath | ConvertFrom-Json
     if (!(Test-Path $userConfigPath)) {
         $defaultConfig | ConvertTo-Json | Out-File $userConfigPath
+        $userConfig = $defaultConfig
     }
     else {
         $userConfig = Get-Content $userConfigPath | ConvertFrom-Json

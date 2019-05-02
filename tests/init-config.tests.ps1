@@ -14,7 +14,7 @@ InModuleScope toko-posh-dev-tools {
             DefaultSetting = "DefaultSettingValueModified"
         }
 
-        $Global:result
+        $Script:result
 
         BeforeEach {
 
@@ -31,7 +31,7 @@ InModuleScope toko-posh-dev-tools {
             } -ParameterFilter { $Path -and $Path -eq $userConfigPath }
 
             Mock Out-File {
-                $Global:result = $InputObject | ConvertFrom-Json
+                $Script:result = $InputObject | ConvertFrom-Json
             }
         }
 
@@ -42,7 +42,7 @@ InModuleScope toko-posh-dev-tools {
             } -ParameterFilter { $Path -and $Path -eq $userConfigPath }
 
             get-userConfig -defaultConfigPath $mockDefaultConfigPath -userConfigPath $userConfigPath
-            $Global:result | Should -BeLike $defaultConfig
+            $Script:result | Should -BeLike $defaultConfig
         }
 
         It "update existing user config when default one exists with new settings" {
@@ -60,7 +60,7 @@ InModuleScope toko-posh-dev-tools {
             } -ParameterFilter { $Path -and $Path -eq $userConfigPath }
 
             get-userConfig -defaultConfigPath $mockDefaultConfigPath -userConfigPath $userConfigPath
-            $Global:result | Should -BeLike $defaultConfig
+            $Script:result | Should -BeLike $defaultConfig
         }
 
         It "leave existing settings unchanged" {
@@ -78,7 +78,7 @@ InModuleScope toko-posh-dev-tools {
             } -ParameterFilter { $Path -and $Path -eq $userConfigPath }
 
             get-userConfig -defaultConfigPath $mockDefaultConfigPath -userConfigPath $userConfigPath
-            $Global:result.DefaultSetting | Should -Be "DefaultSettingValueModified"
+            $Script:result.DefaultSetting | Should -Be "DefaultSettingValueModified"
         }
 
         It "remove settings from user config that do not exist in default config" {
@@ -96,7 +96,7 @@ InModuleScope toko-posh-dev-tools {
             } -ParameterFilter { $Path -and $Path -eq $userConfigPath }
 
             get-userConfig -defaultConfigPath $mockDefaultConfigPath -userConfigPath $userConfigPath
-            $Global:result | Should -BeLike $defaultConfig
+            $Script:result | Should -BeLike $defaultConfig
         }
     }
 }
