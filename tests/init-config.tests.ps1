@@ -30,19 +30,39 @@ InModuleScope toko-posh-dev-tools {
                 $userConfig | ConvertTo-Json        
             } -ParameterFilter { $Path -and $Path -eq $userConfigPath }
 
+            Mock Test-Path {
+                $true
+            } -ParameterFilter { $Path -and $Path -eq $userConfigPath }
+
             Mock Out-File {
                 $Script:result = $InputObject | ConvertFrom-Json
             }
         }
 
         It "create empty user config when none found" {
-        
             Mock Test-Path {
                 $false
             } -ParameterFilter { $Path -and $Path -eq $userConfigPath }
 
             get-userConfig -defaultConfigPath $mockDefaultConfigPath -userConfigPath $userConfigPath
             $Script:result | Should -BeLike $defaultConfig
+        }
+
+        It "create empty user config when empty file found" {
+            Mock Get-Content {
+                ""
+            } -ParameterFilter { $Path -and $Path -eq $userConfigPath }
+
+            get-userConfig -defaultConfigPath $mockDefaultConfigPath -userConfigPath $userConfigPath
+            $Script:result | Should -BeLike $defaultConfig
+        }
+
+        It "throw when corrupted user config found" {
+            Mock Get-Content {
+                "\ffdsf'f;sdfll"
+            } -ParameterFilter { $Path -and $Path -eq $userConfigPath }
+
+            { get-userConfig -defaultConfigPath $mockDefaultConfigPath -userConfigPath $userConfigPath } | Should -Throw -ExpectedMessage 'Corrupted user config at'
         }
 
         It "update existing user config when default one exists with new settings" {

@@ -9,12 +9,23 @@ function get-userConfig {
     }
 
     $defaultConfig = Get-Content $defaultConfigPath | ConvertFrom-Json
+
     if (!(Test-Path $userConfigPath)) {
         $defaultConfig | ConvertTo-Json | Out-File $userConfigPath
         $userConfig = $defaultConfig
     }
     else {
-        $userConfig = Get-Content $userConfigPath | ConvertFrom-Json
+        try {
+            $userConfig = Get-Content $userConfigPath | ConvertFrom-Json
+        }
+        catch {
+            throw "Corrupted user config at $userConfigPath. Probably not a json format? Inner exception: $_"
+        }
+
+        if (!$userConfig) {
+            $userConfig = New-Object -TypeName psobject
+        }
+
         # create new properties from default
         $defaultConfig.PSObject.Properties | ForEach-Object {
             if (!$userConfig.PSObject.Properties.Match($_.Name).length) {
