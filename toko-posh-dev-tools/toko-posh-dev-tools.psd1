@@ -10,7 +10,7 @@
     AliasesToExport   = '*'
     CmdletsToExport   = @()
     VariablesToExport = @()
-    ModuleVersion     = '0.1.1'
+    ModuleVersion     = '0.1.2'
     PrivateData       = @{
         PSData = @{
             ProjectUri   = 'https://github.com/todorm85/toko-posh-dev-tools'
